@@ -27,7 +27,7 @@ function getSelectedPercent(){
         });
 }
 
-function getGoals(){
+function getData(className, jsonKey, beforeText, afterText){
     $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
 
     }).then(function(){
@@ -39,159 +39,57 @@ function getGoals(){
                 plrs = allPlayers.elements
                 $.each(plrs, function(index, plr){
                     if (plr.id == player){
-                        $(tag).after('<div class="ism-element__data goalsScored" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">' + plr.goals_scored + ' Goals</div>');
+                        $(tag).after('<div class="ism-element__data ' + className + '" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">' + beforeText + '' + plr[jsonKey] + '' + afterText + '</div>');
                     }
                 })
             })
         })
     })
 }
-
-function getCleanSheets(){
-    $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
-
-    }).then(function(){
-        $.get('https://fantasy.premierleague.com/drf/bootstrap-static', function(allPlayers){
-
-        }).then(function(allPlayers){
-            $('.ism-element__data').each(function(index, tag){
-                player = response.picks[index].element;
-                plrs = allPlayers.elements
-                $.each(plrs, function(index, plr){
-                    if (plr.id == player){
-                        $(tag).after('<div class="ism-element__data cleanSheets" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">' + plr.clean_sheets + ' clean sheets</div>');
-                    }
-                })
-            })
-        })
-    })
-}
-
-function getYellowCards(){
-    $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
-
-    }).then(function(){
-        $.get('https://fantasy.premierleague.com/drf/bootstrap-static', function(allPlayers){
-
-        }).then(function(allPlayers){
-            $('.ism-element__data').each(function(index, tag){
-                player = response.picks[index].element;
-                plrs = allPlayers.elements
-                $.each(plrs, function(index, plr){
-                    if (plr.id == player){
-                        $(tag).after('<div class="ism-element__data yellowCards" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">' + plr.yellow_cards + ' bookings</div>');
-                    }
-                })
-            })
-        })
-    })
-}
-
-function getTotalPoints(){
-    $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
-
-    }).then(function(){
-        $.get('https://fantasy.premierleague.com/drf/bootstrap-static', function(allPlayers){
-
-        }).then(function(allPlayers){
-            $('.ism-element__data').each(function(index, tag){
-                player = response.picks[index].element;
-                plrs = allPlayers.elements
-                $.each(plrs, function(index, plr){
-                    if (plr.id == player){
-                        $(tag).after('<div class="ism-element__data totalPoints" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">Total Pts: ' + plr.total_points + '</div>');
-                    }
-                })
-            })
-        })
-    })
-}
-
-function getRedCards(){
-    $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
-
-    }).then(function(){
-        $.get('https://fantasy.premierleague.com/drf/bootstrap-static', function(allPlayers){
-
-        }).then(function(allPlayers){
-            $('.ism-element__data').each(function(index, tag){
-                player = response.picks[index].element;
-                plrs = allPlayers.elements
-                $.each(plrs, function(index, plr){
-                    if (plr.id == player){
-                        $(tag).after('<div class="ism-element__data redCards" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">' + plr.red_cards + ' red cards</div>');
-                    }
-                })
-            })
-        })
-    })
-}
-
-function getAssists(){
-    $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
-
-    }).then(function(){
-        $.get('https://fantasy.premierleague.com/drf/bootstrap-static', function(allPlayers){
-
-        }).then(function(allPlayers){
-            $('.ism-element__data').each(function(index, tag){
-                player = response.picks[index].element;
-                plrs = allPlayers.elements
-                $.each(plrs, function(index, plr){
-                    if (plr.id == player){
-                        $(tag).after('<div class="ism-element__data assists" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">' + plr.assists + ' Assists</div>');
-                    }
-                })
-            })
-        })
-    })
-}
-
 
 chrome.runtime.onMessage.addListener(onMessage);
 
 function onMessage(message, sender, sendResponse){
 
     if (message.selectedPercent){
-        // display selected percent
-        getSelectedPercent();
+        getData('selectedPercent', 'selected_by_percent', '', '% Owned');
     }
     else{
         $('.selectedPercent').remove();
     }
     if (message.goalsScored){
-        getGoals();
+        getData('goalsScored', 'goals_scored', '', ' Goals');
     }
     else{
         $('.goalsScored').remove();
     }
     if (message.cleanSheets){
-        getCleanSheets();
+        getData('cleanSheets', 'clean_sheets', '', ' clean sheets');
     }
     else{
         $('.cleanSheets').remove();
     }
 
     if (message.yellowCards){
-        getYellowCards();
+        getData('yellowCards', 'yellow_cards', '', ' bookings');
     }
     else{
         $('.yellowCards').remove();
     }
     if (message.redCards){
-        getRedCards();
+        getData('redCards', 'red_cards', '', ' red cards');
     }
     else{
         $('.redCards').remove();
     }
     if (message.totalPoints){
-        getTotalPoints();
+        getData('totalPoints', 'total_points', 'Total Pts: ', '');
     }
     else{
         $('.totalPoints').remove();
     }
     if (message.assists){
-        getAssists();
+        getData('assists', 'assists', '', ' assists');
     }
     else{
         $('.assists').remove();
