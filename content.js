@@ -2,30 +2,8 @@ console.log('fpl extention running!');
 
 let delay = 500;
 setTimeout(function(){
-    getSelectedPercent();
+    getData('selectedPercent', 'selected_by_percent', '', '% Owned');
 }, delay);
-
-function getSelectedPercent(){
-    response = "";
-
-    $.get("https://fantasy.premierleague.com/drf/transfers", function(data){
-        response = data;
-    }).then(function(){
-        $.get('https://fantasy.premierleague.com/drf/bootstrap-static', function(allPlayers){
-
-        }).then(function(allPlayers){
-                $('.ism-element__data').each(function(index, tag){
-                    player = response.picks[index].element;    -097
-                    plrs = allPlayers.elements
-                    $.each(plrs, function(index, plr){
-                        if (plr.id == player){
-                            $(tag).after('<div class="ism-element__data selectedPercent" style="background-color: rgba(0, 111, 55, 0.9); color: #ffffff">' + plr.selected_by_percent + '% Owned</div>');
-                        }
-                    });
-                });
-            });
-        });
-}
 
 function getData(className, jsonKey, beforeText, afterText){
     $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
