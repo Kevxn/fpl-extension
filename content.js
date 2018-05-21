@@ -6,14 +6,15 @@ setTimeout(function(){
 }, delay);
 
 function getData(className, jsonKey, beforeText, afterText){
+    resp = "";
     $.get('https://fantasy.premierleague.com/drf/transfers', function(data){
-
+        resp = data;
     }).then(function(){
         $.get('https://fantasy.premierleague.com/drf/bootstrap-static', function(allPlayers){
 
         }).then(function(allPlayers){
             $('.ism-element__data').each(function(index, tag){
-                player = response.picks[index].element;
+                player = resp.picks[index].element;
                 plrs = allPlayers.elements
                 $.each(plrs, function(index, plr){
                     if (plr.id == player){
