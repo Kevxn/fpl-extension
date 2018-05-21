@@ -2,10 +2,10 @@
     "manifest_version": 2,
     "name": "FPL Transfers",
     "description": "Chrome extension for showing additional information on fantasy.premierleague.com",
-    "version": "0.02",
+    "version": "0.33",
     "content_scripts": [
         {
-            "matches": ["http://fantasy.premierleague.com/*", "https://fantasy.premierleague.com/*"],
+            "matches": ["http://fantasy.premierleague.com/a/squad/transfers", "https://fantasy.premierleague.com/a/squad/transfers"],
             "js": ["jquery-3.3.1.min.js", "content.js"]
         }
     ],

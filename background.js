@@ -21,6 +21,8 @@ function gotTabs(tabs){
     let cleanSheets = $('#cleanSheets').is(':checked');
     let yellowCards = $('#yellowCards').is(':checked');
     let redCards = $('#redCards').is(':checked');
+    let totalPoints = $('#totalPoints').is(':checked');
+    let assists = $('#assists').is(':checked');
     let none = $('#clear').is(':checked');
 
     let message = {
@@ -29,36 +31,10 @@ function gotTabs(tabs){
         cleanSheets: cleanSheets,
         yellowCards: yellowCards,
         redCards: redCards,
+        totalPoints: totalPoints,
+        assists: assists,
         clear: clear
     }
 
     chrome.tabs.sendMessage(tabs[0].id, message);
 }
-
-$('#selectedPercent').on('change', function(){
-    if (this.checked){
-        chrome.tabs.sendMessage(tab.id, "selectedPercent");
-    }
-});
-$('#goalsScored').on('change', function(){
-    if (this.checked){
-        console.log(this.value);
-    }
-});
-$('#cleanSheets').on('change', function(){
-    if (this.checked){
-        console.log(this.value);
-    }
-    // show selectedPercent
-});
-$('#yellowCards').on('change', function(){
-    if (this.checked){
-        console.log(this.value);
-    }
-});
-$('#redCards').on('change', function(){
-    if (this.checked){
-        console.log(this.value);
-    }
-    // show selectedPercent
-});
